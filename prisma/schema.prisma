@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  name       String
+  role       Role     @default(USER)
+  createdAt  DateTime @default(now())
+  loans      Loan[]
+  reviews    Review[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Book {
+  id           Int      @id @default(autoincrement())
+  title        String
+  author       String
+  isbn         String?  @unique
+  description  String?
+  copiesTotal  Int      @default(1)
+  copiesAvail  Int      @default(1)
+  createdAt    DateTime @default(now())
+  reviews      Review[]
+  loans        Loan[]
+}
+
+model Loan {
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  book        Book       @relation(fields: [bookId], references: [id])
+  bookId      Int
+  type        LoanType   @default(LOAN)
+  status      LoanStatus @default(RESERVED)
+  startDate   DateTime?
+  dueDate     DateTime?
+  returnDate  DateTime?
+  createdAt   DateTime   @default(now())
+  adminNote   String?
+}
+
+enum LoanType {
+  LOAN
+  RESERVATION
+}
+
+enum LoanStatus {
+  RESERVED
+  BORROWED
+  RETURNED
+  CANCELLED
+  REJECTED
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  book       Book     @relation(fields: [bookId], references: [id])
+  bookId     Int
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+  response   String?
+}
