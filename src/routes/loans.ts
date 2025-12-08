@@ -64,4 +64,25 @@ router.get("/", authMiddleware, async (req: AuthRequest, res) => {
   }
 });
 
+router.post("/reject/:loanId", authMiddleware, adminOnly, async (req: AuthRequest, res) => {
+  const loanId = Number(req.params.loanId);
+  const { adminNote } = req.body;
+  
+  const loan = await prisma.loan.findUnique({ where: { id: loanId }, include: { book: true } });
+  if (!loan) return res.status(404).json({ message: "Loan not found" });
+
+  const updated = await prisma.loan.update({
+    where: { id: loanId },
+    data: { status: "REJECTED", adminNote }
+  });
+
+  // Devolver a cópia ao estoque
+  await prisma.book.update({ 
+    where: { id: loan.bookId }, 
+    data: { copiesAvail: loan.book.copiesAvail + 1 } 
+  });
+
+  res.json(updated);
+});
+
 export default router;

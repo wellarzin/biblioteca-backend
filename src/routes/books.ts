@@ -5,7 +5,17 @@ import { authMiddleware, adminOnly, AuthRequest } from "../middleware/auth";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const books = await prisma.book.findMany();
+  const books = await prisma.book.findMany({
+    include: {
+      reviews: {
+        include: {
+          user: {
+            select: { id: true, name: true, email: true }
+          }
+        }
+      }
+    }
+  });
   res.json(books);
 });
 
