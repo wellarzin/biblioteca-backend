@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:generate": "prisma generate",
-    "prisma:studio": "prisma studio"
-  },
+ "scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+  "build": "tsc",
+  "start": "node dist/serverless.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,6 +23,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
+    "@vercel/node": "^5.5.15",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

@@ -12,8 +12,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000', 
-  credentials: true 
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
 }));
 
 app.use(express.json());
@@ -24,5 +24,4 @@ app.use("/api/books", bookRoutes);
 app.use("/api/loans", loanRoutes);
 app.use("/api/reviews", reviewRoutes);
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+export default app;
