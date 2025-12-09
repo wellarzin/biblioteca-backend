@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
- "scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-  "build": "tsc",
-  "start": "node dist/serverless.js"
-},
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/serverless.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
+    "@vendia/serverless-express": "^4.12.6",
     "@vercel/node": "^5.5.15",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",

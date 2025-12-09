@@ -2,13 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/users";
-import bookRoutes from "./routes/books";
-import loanRoutes from "./routes/loans";
-import reviewRoutes from "./routes/reviews";
-
 dotenv.config();
+
 const app = express();
 
 app.use(cors({
@@ -17,6 +12,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+import authRoutes from "./routes/auth";
+import userRoutes from "./routes/users";
+import bookRoutes from "./routes/books";
+import loanRoutes from "./routes/loans";
+import reviewRoutes from "./routes/reviews";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

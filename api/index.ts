@@ -1,6 +1,9 @@
-import app from "../dist/index";
 import { VercelRequest, VercelResponse } from "@vercel/node";
+import serverlessExpress from "@vendia/serverless-express";
+import app from "../dist/index";
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  app(req, res);
+const handler = serverlessExpress({ app });
+
+export default function vercelHandler(req: VercelRequest, res: VercelResponse) {
+  return handler(req, res);
 }
